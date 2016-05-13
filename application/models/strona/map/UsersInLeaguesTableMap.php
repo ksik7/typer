@@ -3,7 +3,7 @@
 
 
 /**
- * This class defines the structure of the 'matches' table.
+ * This class defines the structure of the 'users_in_leagues' table.
  *
  *
  *
@@ -14,13 +14,13 @@
  *
  * @package    propel.generator.strona.map
  */
-class MatchesTableMap extends TableMap
+class UsersInLeaguesTableMap extends TableMap
 {
 
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'strona.map.MatchesTableMap';
+    const CLASS_NAME = 'strona.map.UsersInLeaguesTableMap';
 
     /**
      * Initialize the table attributes, columns and validators
@@ -32,16 +32,15 @@ class MatchesTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('matches');
-        $this->setPhpName('Matches');
-        $this->setClassname('Matches');
+        $this->setName('users_in_leagues');
+        $this->setPhpName('UsersInLeagues');
+        $this->setClassname('UsersInLeagues');
         $this->setPackage('strona');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('team1', 'Team1', 'VARCHAR', true, 100, null);
-        $this->addColumn('team2', 'Team2', 'VARCHAR', true, 100, null);
-        $this->addColumn('LIGA', 'Liga', 'VARCHAR', true, 30, null);
+        $this->addColumn('league_id', 'LeagueId', 'INTEGER', true, null, null);
+        $this->addColumn('user_id', 'UserId', 'INTEGER', true, null, null);
         // validators
     } // initialize()
 
@@ -50,7 +49,6 @@ class MatchesTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('DataLeague', 'DataLeague', RelationMap::ONE_TO_MANY, array('id' => 'match_id', ), null, null, 'DataLeagues');
     } // buildRelations()
 
-} // MatchesTableMap
+} // UsersInLeaguesTableMap

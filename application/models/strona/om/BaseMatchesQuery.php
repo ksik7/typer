@@ -9,24 +9,32 @@
  * @method MatchesQuery orderById($order = Criteria::ASC) Order by the id column
  * @method MatchesQuery orderByTeam1($order = Criteria::ASC) Order by the team1 column
  * @method MatchesQuery orderByTeam2($order = Criteria::ASC) Order by the team2 column
+ * @method MatchesQuery orderByLiga($order = Criteria::ASC) Order by the LIGA column
  *
  * @method MatchesQuery groupById() Group by the id column
  * @method MatchesQuery groupByTeam1() Group by the team1 column
  * @method MatchesQuery groupByTeam2() Group by the team2 column
+ * @method MatchesQuery groupByLiga() Group by the LIGA column
  *
  * @method MatchesQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method MatchesQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method MatchesQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ *
+ * @method MatchesQuery leftJoinDataLeague($relationAlias = null) Adds a LEFT JOIN clause to the query using the DataLeague relation
+ * @method MatchesQuery rightJoinDataLeague($relationAlias = null) Adds a RIGHT JOIN clause to the query using the DataLeague relation
+ * @method MatchesQuery innerJoinDataLeague($relationAlias = null) Adds a INNER JOIN clause to the query using the DataLeague relation
  *
  * @method Matches findOne(PropelPDO $con = null) Return the first Matches matching the query
  * @method Matches findOneOrCreate(PropelPDO $con = null) Return the first Matches matching the query, or a new Matches object populated from the query conditions when no match is found
  *
  * @method Matches findOneByTeam1(string $team1) Return the first Matches filtered by the team1 column
  * @method Matches findOneByTeam2(string $team2) Return the first Matches filtered by the team2 column
+ * @method Matches findOneByLiga(string $LIGA) Return the first Matches filtered by the LIGA column
  *
  * @method array findById(int $id) Return Matches objects filtered by the id column
  * @method array findByTeam1(string $team1) Return Matches objects filtered by the team1 column
  * @method array findByTeam2(string $team2) Return Matches objects filtered by the team2 column
+ * @method array findByLiga(string $LIGA) Return Matches objects filtered by the LIGA column
  *
  * @package    propel.generator.strona.om
  */
@@ -134,7 +142,7 @@ abstract class BaseMatchesQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `team1`, `team2` FROM `matches` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `team1`, `team2`, `LIGA` FROM `matches` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -321,6 +329,109 @@ abstract class BaseMatchesQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(MatchesPeer::TEAM2, $team2, $comparison);
+    }
+
+    /**
+     * Filter the query on the LIGA column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLiga('fooValue');   // WHERE LIGA = 'fooValue'
+     * $query->filterByLiga('%fooValue%'); // WHERE LIGA LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $liga The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return MatchesQuery The current query, for fluid interface
+     */
+    public function filterByLiga($liga = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($liga)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $liga)) {
+                $liga = str_replace('*', '%', $liga);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(MatchesPeer::LIGA, $liga, $comparison);
+    }
+
+    /**
+     * Filter the query by a related DataLeague object
+     *
+     * @param   DataLeague|PropelObjectCollection $dataLeague  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 MatchesQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByDataLeague($dataLeague, $comparison = null)
+    {
+        if ($dataLeague instanceof DataLeague) {
+            return $this
+                ->addUsingAlias(MatchesPeer::ID, $dataLeague->getMatchId(), $comparison);
+        } elseif ($dataLeague instanceof PropelObjectCollection) {
+            return $this
+                ->useDataLeagueQuery()
+                ->filterByPrimaryKeys($dataLeague->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByDataLeague() only accepts arguments of type DataLeague or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the DataLeague relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return MatchesQuery The current query, for fluid interface
+     */
+    public function joinDataLeague($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('DataLeague');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'DataLeague');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the DataLeague relation DataLeague object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   DataLeagueQuery A secondary query class using the current class as primary query
+     */
+    public function useDataLeagueQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinDataLeague($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'DataLeague', 'DataLeagueQuery');
     }
 
     /**

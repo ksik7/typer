@@ -1,0 +1,25 @@
+<div class="col-md-3">
+    <ul class="list-group" id="test">
+
+    </ul>
+</div>
+<div class="col-md-6">
+    <div class="list-group">
+        <?php
+
+        /**
+         * @var Leagues $league
+         */
+
+        foreach ($this->leagues as $league) {
+            echo '<a class="btn btn-info btn-lg list-group-item" href="' . $this->url(array(
+                    'module' => 'league',
+                    'controller' => 'league',
+                    'action' => 'details',
+                    'id' => $league->getId()
+                )) . '"><span class="badge">' . $league->getUsers()->getLogin() . '</span>' . $league->getName() . '</a>';
+        }
+
+        ?>
+    </div>
+</div>

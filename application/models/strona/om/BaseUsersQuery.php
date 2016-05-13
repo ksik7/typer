@@ -20,9 +20,9 @@
  * @method UsersQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method UsersQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method UsersQuery leftJoinLeuges($relationAlias = null) Adds a LEFT JOIN clause to the query using the Leuges relation
- * @method UsersQuery rightJoinLeuges($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Leuges relation
- * @method UsersQuery innerJoinLeuges($relationAlias = null) Adds a INNER JOIN clause to the query using the Leuges relation
+ * @method UsersQuery leftJoinLeagues($relationAlias = null) Adds a LEFT JOIN clause to the query using the Leagues relation
+ * @method UsersQuery rightJoinLeagues($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Leagues relation
+ * @method UsersQuery innerJoinLeagues($relationAlias = null) Adds a INNER JOIN clause to the query using the Leagues relation
  *
  * @method Users findOne(PropelPDO $con = null) Return the first Users matching the query
  * @method Users findOneOrCreate(PropelPDO $con = null) Return the first Users matching the query, or a new Users object populated from the query conditions when no match is found
@@ -361,41 +361,41 @@ abstract class BaseUsersQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Leuges object
+     * Filter the query by a related Leagues object
      *
-     * @param   Leuges|PropelObjectCollection $leuges  the related object to use as filter
+     * @param   Leagues|PropelObjectCollection $leagues  the related object to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return                 UsersQuery The current query, for fluid interface
      * @throws PropelException - if the provided filter is invalid.
      */
-    public function filterByLeuges($leuges, $comparison = null)
+    public function filterByLeagues($leagues, $comparison = null)
     {
-        if ($leuges instanceof Leuges) {
+        if ($leagues instanceof Leagues) {
             return $this
-                ->addUsingAlias(UsersPeer::ID, $leuges->getUserId(), $comparison);
-        } elseif ($leuges instanceof PropelObjectCollection) {
+                ->addUsingAlias(UsersPeer::ID, $leagues->getUserId(), $comparison);
+        } elseif ($leagues instanceof PropelObjectCollection) {
             return $this
-                ->useLeugesQuery()
-                ->filterByPrimaryKeys($leuges->getPrimaryKeys())
+                ->useLeaguesQuery()
+                ->filterByPrimaryKeys($leagues->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByLeuges() only accepts arguments of type Leuges or PropelCollection');
+            throw new PropelException('filterByLeagues() only accepts arguments of type Leagues or PropelCollection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Leuges relation
+     * Adds a JOIN clause to the query using the Leagues relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return UsersQuery The current query, for fluid interface
      */
-    public function joinLeuges($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinLeagues($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Leuges');
+        $relationMap = $tableMap->getRelation('Leagues');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -410,14 +410,14 @@ abstract class BaseUsersQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Leuges');
+            $this->addJoinObject($join, 'Leagues');
         }
 
         return $this;
     }
 
     /**
-     * Use the Leuges relation Leuges object
+     * Use the Leagues relation Leagues object
      *
      * @see       useQuery()
      *
@@ -425,13 +425,13 @@ abstract class BaseUsersQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return   LeugesQuery A secondary query class using the current class as primary query
+     * @return   LeaguesQuery A secondary query class using the current class as primary query
      */
-    public function useLeugesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useLeaguesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinLeuges($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Leuges', 'LeugesQuery');
+            ->joinLeagues($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Leagues', 'LeaguesQuery');
     }
 
     /**

@@ -1,63 +1,35 @@
 $(document).ready(function () {
-    $('a#next').click(function () {
+    $('a').click(function (e) {
+        e.preventDefault();
         var element = $(this);
-        getProducts(element);
+        getAction(element);
     });
-    $('a#previous').click(function () {
-        var element = $(this);
-        getProducts(element);
-    });
-    $('a#page').click(function () {
-        var element = $(this);
-        getProducts(element);
-    });
-
-    var page = window.location.href;
-
-    $.ajax({
-
-        url: page,
-        type: "POST",
-        data: "format=json",
-        async: false,
-        success: function (response) {
-            dataParse(response);
-        }
-    });
-
 });
 
 function dataParse(response) {
 
-    var test = response['products'];
-    var test = JSON.parse(test);
+    var test = response['ajax']['DataLeague_0'];
+    test = JSON.parse(test);
     $('#test').html('');
     for (var i in test) {
-        $('#test').append('<li>' + test[i].Name + '</li>');
+        var value = test[i.toString()];
+        $('#test').append('<li class="list-group-item-text">' + value + '</li>');
     }
-
-    updatePageLink(response.currentPage);
-
 }
 
-function updatePageLink(page) {
-    $("#previous").attr('page', page - 1);
-    $("#next").attr('page', page + 1);
-}
+function getAction(element) {
 
-function getProducts(element) {
-
-    var page = window.location.pathname;
-    var url = page + '/index/page/' + element.attr('page');
+    var url = element.attr('href');
     $.ajax({
 
         url: url,
         type: "POST",
         data: "format=json",
         async: false,
-        success: function (response) {
+        success: function(response){
             dataParse(response);
         }
     });
+    return false;
 }
 

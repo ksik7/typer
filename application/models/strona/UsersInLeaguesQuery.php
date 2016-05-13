@@ -1,7 +1,9 @@
 <?php
 
+
+
 /**
- * Skeleton subclass for performing query and update operations on the 'users' table.
+ * Skeleton subclass for performing query and update operations on the 'users_in_leagues' table.
  *
  *
  *
@@ -11,6 +13,6 @@
  *
  * @package    propel.generator.strona
  */
-class UsersQuery extends BaseUsersQuery
+class UsersInLeaguesQuery extends BaseUsersInLeaguesQuery
 {
 }

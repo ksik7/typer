@@ -2,56 +2,53 @@
 
 
 /**
- * Base static class for performing query and update operations on the 'matches' table.
+ * Base static class for performing query and update operations on the 'users_in_leagues' table.
  *
  *
  *
  * @package propel.generator.strona.om
  */
-abstract class BaseMatchesPeer
+abstract class BaseUsersInLeaguesPeer
 {
 
     /** the default database name for this class */
     const DATABASE_NAME = 'strona';
 
     /** the table name for this class */
-    const TABLE_NAME = 'matches';
+    const TABLE_NAME = 'users_in_leagues';
 
     /** the related Propel class for this table */
-    const OM_CLASS = 'Matches';
+    const OM_CLASS = 'UsersInLeagues';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = 'MatchesTableMap';
+    const TM_CLASS = 'UsersInLeaguesTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 3;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 4;
+    const NUM_HYDRATE_COLUMNS = 3;
 
     /** the column name for the id field */
-    const ID = 'matches.id';
+    const ID = 'users_in_leagues.id';
 
-    /** the column name for the team1 field */
-    const TEAM1 = 'matches.team1';
+    /** the column name for the league_id field */
+    const LEAGUE_ID = 'users_in_leagues.league_id';
 
-    /** the column name for the team2 field */
-    const TEAM2 = 'matches.team2';
-
-    /** the column name for the LIGA field */
-    const LIGA = 'matches.LIGA';
+    /** the column name for the user_id field */
+    const USER_ID = 'users_in_leagues.user_id';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
 
     /**
-     * An identity map to hold any loaded instances of Matches objects.
+     * An identity map to hold any loaded instances of UsersInLeagues objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array Matches[]
+     * @var        array UsersInLeagues[]
      */
     public static $instances = array();
 
@@ -60,30 +57,30 @@ abstract class BaseMatchesPeer
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. MatchesPeer::$fieldNames[MatchesPeer::TYPE_PHPNAME][0] = 'Id'
+     * e.g. UsersInLeaguesPeer::$fieldNames[UsersInLeaguesPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'Team1', 'Team2', 'Liga', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'team1', 'team2', 'liga', ),
-        BasePeer::TYPE_COLNAME => array (MatchesPeer::ID, MatchesPeer::TEAM1, MatchesPeer::TEAM2, MatchesPeer::LIGA, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'TEAM1', 'TEAM2', 'LIGA', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'team1', 'team2', 'LIGA', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'LeagueId', 'UserId', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'leagueId', 'userId', ),
+        BasePeer::TYPE_COLNAME => array (UsersInLeaguesPeer::ID, UsersInLeaguesPeer::LEAGUE_ID, UsersInLeaguesPeer::USER_ID, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'LEAGUE_ID', 'USER_ID', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'league_id', 'user_id', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
     /**
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. MatchesPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. UsersInLeaguesPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Team1' => 1, 'Team2' => 2, 'Liga' => 3, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'team1' => 1, 'team2' => 2, 'liga' => 3, ),
-        BasePeer::TYPE_COLNAME => array (MatchesPeer::ID => 0, MatchesPeer::TEAM1 => 1, MatchesPeer::TEAM2 => 2, MatchesPeer::LIGA => 3, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'TEAM1' => 1, 'TEAM2' => 2, 'LIGA' => 3, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'team1' => 1, 'team2' => 2, 'LIGA' => 3, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'LeagueId' => 1, 'UserId' => 2, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'leagueId' => 1, 'userId' => 2, ),
+        BasePeer::TYPE_COLNAME => array (UsersInLeaguesPeer::ID => 0, UsersInLeaguesPeer::LEAGUE_ID => 1, UsersInLeaguesPeer::USER_ID => 2, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'LEAGUE_ID' => 1, 'USER_ID' => 2, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'league_id' => 1, 'user_id' => 2, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
     /**
@@ -98,10 +95,10 @@ abstract class BaseMatchesPeer
      */
     public static function translateFieldName($name, $fromType, $toType)
     {
-        $toNames = MatchesPeer::getFieldNames($toType);
-        $key = isset(MatchesPeer::$fieldKeys[$fromType][$name]) ? MatchesPeer::$fieldKeys[$fromType][$name] : null;
+        $toNames = UsersInLeaguesPeer::getFieldNames($toType);
+        $key = isset(UsersInLeaguesPeer::$fieldKeys[$fromType][$name]) ? UsersInLeaguesPeer::$fieldKeys[$fromType][$name] : null;
         if ($key === null) {
-            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(MatchesPeer::$fieldKeys[$fromType], true));
+            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(UsersInLeaguesPeer::$fieldKeys[$fromType], true));
         }
 
         return $toNames[$key];
@@ -118,11 +115,11 @@ abstract class BaseMatchesPeer
      */
     public static function getFieldNames($type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists($type, MatchesPeer::$fieldNames)) {
+        if (!array_key_exists($type, UsersInLeaguesPeer::$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
         }
 
-        return MatchesPeer::$fieldNames[$type];
+        return UsersInLeaguesPeer::$fieldNames[$type];
     }
 
     /**
@@ -134,12 +131,12 @@ abstract class BaseMatchesPeer
      *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
      * @param      string $alias The alias for the current table.
-     * @param      string $column The column name for current table. (i.e. MatchesPeer::COLUMN_NAME).
+     * @param      string $column The column name for current table. (i.e. UsersInLeaguesPeer::COLUMN_NAME).
      * @return string
      */
     public static function alias($alias, $column)
     {
-        return str_replace(MatchesPeer::TABLE_NAME.'.', $alias.'.', $column);
+        return str_replace(UsersInLeaguesPeer::TABLE_NAME.'.', $alias.'.', $column);
     }
 
     /**
@@ -157,15 +154,13 @@ abstract class BaseMatchesPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(MatchesPeer::ID);
-            $criteria->addSelectColumn(MatchesPeer::TEAM1);
-            $criteria->addSelectColumn(MatchesPeer::TEAM2);
-            $criteria->addSelectColumn(MatchesPeer::LIGA);
+            $criteria->addSelectColumn(UsersInLeaguesPeer::ID);
+            $criteria->addSelectColumn(UsersInLeaguesPeer::LEAGUE_ID);
+            $criteria->addSelectColumn(UsersInLeaguesPeer::USER_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.team1');
-            $criteria->addSelectColumn($alias . '.team2');
-            $criteria->addSelectColumn($alias . '.LIGA');
+            $criteria->addSelectColumn($alias . '.league_id');
+            $criteria->addSelectColumn($alias . '.user_id');
         }
     }
 
@@ -185,21 +180,21 @@ abstract class BaseMatchesPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(MatchesPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(UsersInLeaguesPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            MatchesPeer::addSelectColumns($criteria);
+            UsersInLeaguesPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        $criteria->setDbName(MatchesPeer::DATABASE_NAME); // Set the correct dbName
+        $criteria->setDbName(UsersInLeaguesPeer::DATABASE_NAME); // Set the correct dbName
 
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         // BasePeer returns a PDOStatement
         $stmt = BasePeer::doCount($criteria, $con);
@@ -218,7 +213,7 @@ abstract class BaseMatchesPeer
      *
      * @param      Criteria $criteria object used to create the SELECT statement.
      * @param      PropelPDO $con
-     * @return Matches
+     * @return UsersInLeagues
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -226,7 +221,7 @@ abstract class BaseMatchesPeer
     {
         $critcopy = clone $criteria;
         $critcopy->setLimit(1);
-        $objects = MatchesPeer::doSelect($critcopy, $con);
+        $objects = UsersInLeaguesPeer::doSelect($critcopy, $con);
         if ($objects) {
             return $objects[0];
         }
@@ -244,7 +239,7 @@ abstract class BaseMatchesPeer
      */
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)
     {
-        return MatchesPeer::populateObjects(MatchesPeer::doSelectStmt($criteria, $con));
+        return UsersInLeaguesPeer::populateObjects(UsersInLeaguesPeer::doSelectStmt($criteria, $con));
     }
     /**
      * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -262,16 +257,16 @@ abstract class BaseMatchesPeer
     public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         if (!$criteria->hasSelectClause()) {
             $criteria = clone $criteria;
-            MatchesPeer::addSelectColumns($criteria);
+            UsersInLeaguesPeer::addSelectColumns($criteria);
         }
 
         // Set the correct dbName
-        $criteria->setDbName(MatchesPeer::DATABASE_NAME);
+        $criteria->setDbName(UsersInLeaguesPeer::DATABASE_NAME);
 
         // BasePeer returns a PDOStatement
         return BasePeer::doSelect($criteria, $con);
@@ -285,7 +280,7 @@ abstract class BaseMatchesPeer
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param Matches $obj A Matches object.
+     * @param UsersInLeagues $obj A UsersInLeagues object.
      * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
@@ -294,7 +289,7 @@ abstract class BaseMatchesPeer
             if ($key === null) {
                 $key = (string) $obj->getId();
             } // if key === null
-            MatchesPeer::$instances[$key] = $obj;
+            UsersInLeaguesPeer::$instances[$key] = $obj;
         }
     }
 
@@ -306,7 +301,7 @@ abstract class BaseMatchesPeer
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param      mixed $value A Matches object or a primary key value.
+     * @param      mixed $value A UsersInLeagues object or a primary key value.
      *
      * @return void
      * @throws PropelException - if the value is invalid.
@@ -314,17 +309,17 @@ abstract class BaseMatchesPeer
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
-            if (is_object($value) && $value instanceof Matches) {
+            if (is_object($value) && $value instanceof UsersInLeagues) {
                 $key = (string) $value->getId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Matches object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or UsersInLeagues object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
                 throw $e;
             }
 
-            unset(MatchesPeer::$instances[$key]);
+            unset(UsersInLeaguesPeer::$instances[$key]);
         }
     } // removeInstanceFromPool()
 
@@ -335,14 +330,14 @@ abstract class BaseMatchesPeer
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return Matches Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return UsersInLeagues Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool($key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(MatchesPeer::$instances[$key])) {
-                return MatchesPeer::$instances[$key];
+            if (isset(UsersInLeaguesPeer::$instances[$key])) {
+                return UsersInLeaguesPeer::$instances[$key];
             }
         }
 
@@ -357,15 +352,15 @@ abstract class BaseMatchesPeer
     public static function clearInstancePool($and_clear_all_references = false)
     {
       if ($and_clear_all_references) {
-        foreach (MatchesPeer::$instances as $instance) {
+        foreach (UsersInLeaguesPeer::$instances as $instance) {
           $instance->clearAllReferences(true);
         }
       }
-        MatchesPeer::$instances = array();
+        UsersInLeaguesPeer::$instances = array();
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to matches
+     * Method to invalidate the instance pool of all tables related to users_in_leagues
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
@@ -419,11 +414,11 @@ abstract class BaseMatchesPeer
         $results = array();
 
         // set the class once to avoid overhead in the loop
-        $cls = MatchesPeer::getOMClass();
+        $cls = UsersInLeaguesPeer::getOMClass();
         // populate the object(s)
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key = MatchesPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj = MatchesPeer::getInstanceFromPool($key))) {
+            $key = UsersInLeaguesPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj = UsersInLeaguesPeer::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
@@ -432,7 +427,7 @@ abstract class BaseMatchesPeer
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                MatchesPeer::addInstanceToPool($obj, $key);
+                UsersInLeaguesPeer::addInstanceToPool($obj, $key);
             } // if key exists
         }
         $stmt->closeCursor();
@@ -446,21 +441,21 @@ abstract class BaseMatchesPeer
      * @param      int $startcol The 0-based offset for reading from the resultset row.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (Matches object, last column rank)
+     * @return array (UsersInLeagues object, last column rank)
      */
     public static function populateObject($row, $startcol = 0)
     {
-        $key = MatchesPeer::getPrimaryKeyHashFromRow($row, $startcol);
-        if (null !== ($obj = MatchesPeer::getInstanceFromPool($key))) {
+        $key = UsersInLeaguesPeer::getPrimaryKeyHashFromRow($row, $startcol);
+        if (null !== ($obj = UsersInLeaguesPeer::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $startcol, true); // rehydrate
-            $col = $startcol + MatchesPeer::NUM_HYDRATE_COLUMNS;
+            $col = $startcol + UsersInLeaguesPeer::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = MatchesPeer::OM_CLASS;
+            $cls = UsersInLeaguesPeer::OM_CLASS;
             $obj = new $cls();
             $col = $obj->hydrate($row, $startcol);
-            MatchesPeer::addInstanceToPool($obj, $key);
+            UsersInLeaguesPeer::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -475,7 +470,7 @@ abstract class BaseMatchesPeer
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(MatchesPeer::DATABASE_NAME)->getTable(MatchesPeer::TABLE_NAME);
+        return Propel::getDatabaseMap(UsersInLeaguesPeer::DATABASE_NAME)->getTable(UsersInLeaguesPeer::TABLE_NAME);
     }
 
     /**
@@ -483,9 +478,9 @@ abstract class BaseMatchesPeer
      */
     public static function buildTableMap()
     {
-      $dbMap = Propel::getDatabaseMap(BaseMatchesPeer::DATABASE_NAME);
-      if (!$dbMap->hasTable(BaseMatchesPeer::TABLE_NAME)) {
-        $dbMap->addTableObject(new \MatchesTableMap());
+      $dbMap = Propel::getDatabaseMap(BaseUsersInLeaguesPeer::DATABASE_NAME);
+      if (!$dbMap->hasTable(BaseUsersInLeaguesPeer::TABLE_NAME)) {
+        $dbMap->addTableObject(new \UsersInLeaguesTableMap());
       }
     }
 
@@ -497,13 +492,13 @@ abstract class BaseMatchesPeer
      */
     public static function getOMClass($row = 0, $colnum = 0)
     {
-        return MatchesPeer::OM_CLASS;
+        return UsersInLeaguesPeer::OM_CLASS;
     }
 
     /**
-     * Performs an INSERT on the database, given a Matches or Criteria object.
+     * Performs an INSERT on the database, given a UsersInLeagues or Criteria object.
      *
-     * @param      mixed $values Criteria or Matches object containing data that is used to create the INSERT statement.
+     * @param      mixed $values Criteria or UsersInLeagues object containing data that is used to create the INSERT statement.
      * @param      PropelPDO $con the PropelPDO connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -512,22 +507,22 @@ abstract class BaseMatchesPeer
     public static function doInsert($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
         } else {
-            $criteria = $values->buildCriteria(); // build Criteria from Matches object
+            $criteria = $values->buildCriteria(); // build Criteria from UsersInLeagues object
         }
 
-        if ($criteria->containsKey(MatchesPeer::ID) && $criteria->keyContainsValue(MatchesPeer::ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.MatchesPeer::ID.')');
+        if ($criteria->containsKey(UsersInLeaguesPeer::ID) && $criteria->keyContainsValue(UsersInLeaguesPeer::ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UsersInLeaguesPeer::ID.')');
         }
 
 
         // Set the correct dbName
-        $criteria->setDbName(MatchesPeer::DATABASE_NAME);
+        $criteria->setDbName(UsersInLeaguesPeer::DATABASE_NAME);
 
         try {
             // use transaction because $criteria could contain info
@@ -544,9 +539,9 @@ abstract class BaseMatchesPeer
     }
 
     /**
-     * Performs an UPDATE on the database, given a Matches or Criteria object.
+     * Performs an UPDATE on the database, given a UsersInLeagues or Criteria object.
      *
-     * @param      mixed $values Criteria or Matches object containing data that is used to create the UPDATE statement.
+     * @param      mixed $values Criteria or UsersInLeagues object containing data that is used to create the UPDATE statement.
      * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
      * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException Any exceptions caught during processing will be
@@ -555,35 +550,35 @@ abstract class BaseMatchesPeer
     public static function doUpdate($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        $selectCriteria = new Criteria(MatchesPeer::DATABASE_NAME);
+        $selectCriteria = new Criteria(UsersInLeaguesPeer::DATABASE_NAME);
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(MatchesPeer::ID);
-            $value = $criteria->remove(MatchesPeer::ID);
+            $comparison = $criteria->getComparison(UsersInLeaguesPeer::ID);
+            $value = $criteria->remove(UsersInLeaguesPeer::ID);
             if ($value) {
-                $selectCriteria->add(MatchesPeer::ID, $value, $comparison);
+                $selectCriteria->add(UsersInLeaguesPeer::ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(MatchesPeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(UsersInLeaguesPeer::TABLE_NAME);
             }
 
-        } else { // $values is Matches object
+        } else { // $values is UsersInLeagues object
             $criteria = $values->buildCriteria(); // gets full criteria
             $selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
         }
 
         // set the correct dbName
-        $criteria->setDbName(MatchesPeer::DATABASE_NAME);
+        $criteria->setDbName(UsersInLeaguesPeer::DATABASE_NAME);
 
         return BasePeer::doUpdate($selectCriteria, $criteria, $con);
     }
 
     /**
-     * Deletes all rows from the matches table.
+     * Deletes all rows from the users_in_leagues table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -592,19 +587,19 @@ abstract class BaseMatchesPeer
     public static function doDeleteAll(PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         $affectedRows = 0; // initialize var to track total num of affected rows
         try {
             // use transaction because $criteria could contain info
             // for more than one table or we could emulating ON DELETE CASCADE, etc.
             $con->beginTransaction();
-            $affectedRows += BasePeer::doDeleteAll(MatchesPeer::TABLE_NAME, $con, MatchesPeer::DATABASE_NAME);
+            $affectedRows += BasePeer::doDeleteAll(UsersInLeaguesPeer::TABLE_NAME, $con, UsersInLeaguesPeer::DATABASE_NAME);
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            MatchesPeer::clearInstancePool();
-            MatchesPeer::clearRelatedInstancePool();
+            UsersInLeaguesPeer::clearInstancePool();
+            UsersInLeaguesPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -615,9 +610,9 @@ abstract class BaseMatchesPeer
     }
 
     /**
-     * Performs a DELETE on the database, given a Matches or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a UsersInLeagues or Criteria object OR a primary key value.
      *
-     * @param      mixed $values Criteria or Matches object or primary key or array of primary keys
+     * @param      mixed $values Criteria or UsersInLeagues object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param      PropelPDO $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -628,32 +623,32 @@ abstract class BaseMatchesPeer
      public static function doDelete($values, PropelPDO $con = null)
      {
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             // invalidate the cache for all objects of this type, since we have no
             // way of knowing (without running a query) what objects should be invalidated
             // from the cache based on this Criteria.
-            MatchesPeer::clearInstancePool();
+            UsersInLeaguesPeer::clearInstancePool();
             // rename for clarity
             $criteria = clone $values;
-        } elseif ($values instanceof Matches) { // it's a model object
+        } elseif ($values instanceof UsersInLeagues) { // it's a model object
             // invalidate the cache for this single object
-            MatchesPeer::removeInstanceFromPool($values);
+            UsersInLeaguesPeer::removeInstanceFromPool($values);
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(MatchesPeer::DATABASE_NAME);
-            $criteria->add(MatchesPeer::ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(UsersInLeaguesPeer::DATABASE_NAME);
+            $criteria->add(UsersInLeaguesPeer::ID, (array) $values, Criteria::IN);
             // invalidate the cache for this object(s)
             foreach ((array) $values as $singleval) {
-                MatchesPeer::removeInstanceFromPool($singleval);
+                UsersInLeaguesPeer::removeInstanceFromPool($singleval);
             }
         }
 
         // Set the correct dbName
-        $criteria->setDbName(MatchesPeer::DATABASE_NAME);
+        $criteria->setDbName(UsersInLeaguesPeer::DATABASE_NAME);
 
         $affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -663,7 +658,7 @@ abstract class BaseMatchesPeer
             $con->beginTransaction();
 
             $affectedRows += BasePeer::doDelete($criteria, $con);
-            MatchesPeer::clearRelatedInstancePool();
+            UsersInLeaguesPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -674,13 +669,13 @@ abstract class BaseMatchesPeer
     }
 
     /**
-     * Validates all modified columns of given Matches object.
+     * Validates all modified columns of given UsersInLeagues object.
      * If parameter $columns is either a single column name or an array of column names
      * than only those columns are validated.
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param Matches $obj The object to validate.
+     * @param UsersInLeagues $obj The object to validate.
      * @param      mixed $cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -690,8 +685,8 @@ abstract class BaseMatchesPeer
         $columns = array();
 
         if ($cols) {
-            $dbMap = Propel::getDatabaseMap(MatchesPeer::DATABASE_NAME);
-            $tableMap = $dbMap->getTable(MatchesPeer::TABLE_NAME);
+            $dbMap = Propel::getDatabaseMap(UsersInLeaguesPeer::DATABASE_NAME);
+            $tableMap = $dbMap->getTable(UsersInLeaguesPeer::TABLE_NAME);
 
             if (! is_array($cols)) {
                 $cols = array($cols);
@@ -707,7 +702,7 @@ abstract class BaseMatchesPeer
 
         }
 
-        return BasePeer::doValidate(MatchesPeer::DATABASE_NAME, MatchesPeer::TABLE_NAME, $columns);
+        return BasePeer::doValidate(UsersInLeaguesPeer::DATABASE_NAME, UsersInLeaguesPeer::TABLE_NAME, $columns);
     }
 
     /**
@@ -715,23 +710,23 @@ abstract class BaseMatchesPeer
      *
      * @param int $pk the primary key.
      * @param      PropelPDO $con the connection to use
-     * @return Matches
+     * @return UsersInLeagues
      */
     public static function retrieveByPK($pk, PropelPDO $con = null)
     {
 
-        if (null !== ($obj = MatchesPeer::getInstanceFromPool((string) $pk))) {
+        if (null !== ($obj = UsersInLeaguesPeer::getInstanceFromPool((string) $pk))) {
             return $obj;
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria = new Criteria(MatchesPeer::DATABASE_NAME);
-        $criteria->add(MatchesPeer::ID, $pk);
+        $criteria = new Criteria(UsersInLeaguesPeer::DATABASE_NAME);
+        $criteria->add(UsersInLeaguesPeer::ID, $pk);
 
-        $v = MatchesPeer::doSelect($criteria, $con);
+        $v = UsersInLeaguesPeer::doSelect($criteria, $con);
 
         return !empty($v) > 0 ? $v[0] : null;
     }
@@ -741,31 +736,31 @@ abstract class BaseMatchesPeer
      *
      * @param      array $pks List of primary keys
      * @param      PropelPDO $con the connection to use
-     * @return Matches[]
+     * @return UsersInLeagues[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
     public static function retrieveByPKs($pks, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(MatchesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(UsersInLeaguesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         $objs = null;
         if (empty($pks)) {
             $objs = array();
         } else {
-            $criteria = new Criteria(MatchesPeer::DATABASE_NAME);
-            $criteria->add(MatchesPeer::ID, $pks, Criteria::IN);
-            $objs = MatchesPeer::doSelect($criteria, $con);
+            $criteria = new Criteria(UsersInLeaguesPeer::DATABASE_NAME);
+            $criteria->add(UsersInLeaguesPeer::ID, $pks, Criteria::IN);
+            $objs = UsersInLeaguesPeer::doSelect($criteria, $con);
         }
 
         return $objs;
     }
 
-} // BaseMatchesPeer
+} // BaseUsersInLeaguesPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseMatchesPeer::buildTableMap();
+BaseUsersInLeaguesPeer::buildTableMap();
 

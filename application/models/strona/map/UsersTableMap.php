@@ -50,7 +50,7 @@ class UsersTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Leuges', 'Leuges', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), null, null, 'Leugess');
+        $this->addRelation('Leagues', 'Leagues', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), null, null, 'Leaguess');
     } // buildRelations()
 
 } // UsersTableMap

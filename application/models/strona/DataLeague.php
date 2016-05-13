@@ -1,7 +1,9 @@
 <?php
 
+
+
 /**
- * Skeleton subclass for performing query and update operations on the 'users' table.
+ * Skeleton subclass for representing a row from the 'data_league' table.
  *
  *
  *
@@ -11,6 +13,6 @@
  *
  * @package    propel.generator.strona
  */
-class UsersQuery extends BaseUsersQuery
+class DataLeague extends BaseDataLeague
 {
 }

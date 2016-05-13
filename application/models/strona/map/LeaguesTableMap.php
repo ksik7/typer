@@ -3,7 +3,7 @@
 
 
 /**
- * This class defines the structure of the 'matches' table.
+ * This class defines the structure of the 'leagues' table.
  *
  *
  *
@@ -14,13 +14,13 @@
  *
  * @package    propel.generator.strona.map
  */
-class MatchesTableMap extends TableMap
+class LeaguesTableMap extends TableMap
 {
 
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'strona.map.MatchesTableMap';
+    const CLASS_NAME = 'strona.map.LeaguesTableMap';
 
     /**
      * Initialize the table attributes, columns and validators
@@ -32,16 +32,16 @@ class MatchesTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('matches');
-        $this->setPhpName('Matches');
-        $this->setClassname('Matches');
+        $this->setName('leagues');
+        $this->setPhpName('Leagues');
+        $this->setClassname('Leagues');
         $this->setPackage('strona');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('team1', 'Team1', 'VARCHAR', true, 100, null);
-        $this->addColumn('team2', 'Team2', 'VARCHAR', true, 100, null);
-        $this->addColumn('LIGA', 'Liga', 'VARCHAR', true, 30, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 100, null);
+        $this->addColumn('data', 'Data', 'LONGVARCHAR', true, null, null);
+        $this->addForeignKey('user_id', 'UserId', 'INTEGER', 'users', 'id', true, null, null);
         // validators
     } // initialize()
 
@@ -50,7 +50,8 @@ class MatchesTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('DataLeague', 'DataLeague', RelationMap::ONE_TO_MANY, array('id' => 'match_id', ), null, null, 'DataLeagues');
+        $this->addRelation('Users', 'Users', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), null, null);
+        $this->addRelation('DataLeague', 'DataLeague', RelationMap::ONE_TO_MANY, array('id' => 'leuge_id', ), null, null, 'DataLeagues');
     } // buildRelations()
 
-} // MatchesTableMap
+} // LeaguesTableMap

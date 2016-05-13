@@ -2,24 +2,24 @@
 
 
 /**
- * Base class that represents a row from the 'users' table.
+ * Base class that represents a row from the 'leagues' table.
  *
  *
  *
  * @package    propel.generator.strona.om
  */
-abstract class BaseUsers extends BaseObject implements Persistent
+abstract class BaseLeagues extends BaseObject implements Persistent
 {
     /**
      * Peer class name
      */
-    const PEER = 'UsersPeer';
+    const PEER = 'LeaguesPeer';
 
     /**
      * The Peer class.
      * Instance provides a convenient way of calling static methods on a class
      * that calling code may not be able to identify.
-     * @var        UsersPeer
+     * @var        LeaguesPeer
      */
     protected static $peer;
 
@@ -36,28 +36,33 @@ abstract class BaseUsers extends BaseObject implements Persistent
     protected $id;
 
     /**
-     * The value for the login field.
+     * The value for the name field.
      * @var        string
      */
-    protected $login;
+    protected $name;
 
     /**
-     * The value for the password field.
+     * The value for the data field.
      * @var        string
      */
-    protected $password;
+    protected $data;
 
     /**
-     * The value for the role field.
-     * @var        string
+     * The value for the user_id field.
+     * @var        int
      */
-    protected $role;
+    protected $user_id;
 
     /**
-     * @var        PropelObjectCollection|Leagues[] Collection to store aggregation of Leagues objects.
+     * @var        Users
      */
-    protected $collLeaguess;
-    protected $collLeaguessPartial;
+    protected $aUsers;
+
+    /**
+     * @var        PropelObjectCollection|DataLeague[] Collection to store aggregation of DataLeague objects.
+     */
+    protected $collDataLeagues;
+    protected $collDataLeaguesPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -83,7 +88,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $leaguessScheduledForDeletion = null;
+    protected $dataLeaguesScheduledForDeletion = null;
 
     /**
      * Get the [id] column value.
@@ -97,43 +102,43 @@ abstract class BaseUsers extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [login] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getLogin()
+    public function getName()
     {
 
-        return $this->login;
+        return $this->name;
     }
 
     /**
-     * Get the [password] column value.
+     * Get the [data] column value.
      *
      * @return string
      */
-    public function getPassword()
+    public function getData()
     {
 
-        return $this->password;
+        return $this->data;
     }
 
     /**
-     * Get the [role] column value.
+     * Get the [user_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getRole()
+    public function getUserId()
     {
 
-        return $this->role;
+        return $this->user_id;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param  int $v new value
-     * @return Users The current object (for fluent API support)
+     * @return Leagues The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -143,7 +148,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[] = UsersPeer::ID;
+            $this->modifiedColumns[] = LeaguesPeer::ID;
         }
 
 
@@ -151,67 +156,71 @@ abstract class BaseUsers extends BaseObject implements Persistent
     } // setId()
 
     /**
-     * Set the value of [login] column.
+     * Set the value of [name] column.
      *
      * @param  string $v new value
-     * @return Users The current object (for fluent API support)
+     * @return Leagues The current object (for fluent API support)
      */
-    public function setLogin($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->login !== $v) {
-            $this->login = $v;
-            $this->modifiedColumns[] = UsersPeer::LOGIN;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[] = LeaguesPeer::NAME;
         }
 
 
         return $this;
-    } // setLogin()
+    } // setName()
 
     /**
-     * Set the value of [password] column.
+     * Set the value of [data] column.
      *
      * @param  string $v new value
-     * @return Users The current object (for fluent API support)
+     * @return Leagues The current object (for fluent API support)
      */
-    public function setPassword($v)
+    public function setData($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[] = UsersPeer::PASSWORD;
+        if ($this->data !== $v) {
+            $this->data = $v;
+            $this->modifiedColumns[] = LeaguesPeer::DATA;
         }
 
 
         return $this;
-    } // setPassword()
+    } // setData()
 
     /**
-     * Set the value of [role] column.
+     * Set the value of [user_id] column.
      *
-     * @param  string $v new value
-     * @return Users The current object (for fluent API support)
+     * @param  int $v new value
+     * @return Leagues The current object (for fluent API support)
      */
-    public function setRole($v)
+    public function setUserId($v)
     {
-        if ($v !== null) {
-            $v = (string) $v;
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
         }
 
-        if ($this->role !== $v) {
-            $this->role = $v;
-            $this->modifiedColumns[] = UsersPeer::ROLE;
+        if ($this->user_id !== $v) {
+            $this->user_id = $v;
+            $this->modifiedColumns[] = LeaguesPeer::USER_ID;
+        }
+
+        if ($this->aUsers !== null && $this->aUsers->getId() !== $v) {
+            $this->aUsers = null;
         }
 
 
         return $this;
-    } // setRole()
+    } // setUserId()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -246,9 +255,9 @@ abstract class BaseUsers extends BaseObject implements Persistent
         try {
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-            $this->login = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-            $this->password = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->role = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+            $this->data = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->user_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -258,10 +267,10 @@ abstract class BaseUsers extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 4; // 4 = UsersPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = LeaguesPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException("Error populating Users object", $e);
+            throw new PropelException("Error populating Leagues object", $e);
         }
     }
 
@@ -281,6 +290,9 @@ abstract class BaseUsers extends BaseObject implements Persistent
     public function ensureConsistency()
     {
 
+        if ($this->aUsers !== null && $this->user_id !== $this->aUsers->getId()) {
+            $this->aUsers = null;
+        }
     } // ensureConsistency
 
     /**
@@ -304,13 +316,13 @@ abstract class BaseUsers extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(UsersPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(LeaguesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $stmt = UsersPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+        $stmt = LeaguesPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         if (!$row) {
@@ -320,7 +332,8 @@ abstract class BaseUsers extends BaseObject implements Persistent
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collLeaguess = null;
+            $this->aUsers = null;
+            $this->collDataLeagues = null;
 
         } // if (deep)
     }
@@ -342,12 +355,12 @@ abstract class BaseUsers extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(UsersPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(LeaguesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
         try {
-            $deleteQuery = UsersQuery::create()
+            $deleteQuery = LeaguesQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -385,7 +398,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(UsersPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(LeaguesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
@@ -405,7 +418,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                UsersPeer::addInstanceToPool($this);
+                LeaguesPeer::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -435,6 +448,18 @@ abstract class BaseUsers extends BaseObject implements Persistent
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
+                }
+                $this->setUsers($this->aUsers);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -446,17 +471,17 @@ abstract class BaseUsers extends BaseObject implements Persistent
                 $this->resetModified();
             }
 
-            if ($this->leaguessScheduledForDeletion !== null) {
-                if (!$this->leaguessScheduledForDeletion->isEmpty()) {
-                    LeaguesQuery::create()
-                        ->filterByPrimaryKeys($this->leaguessScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->dataLeaguesScheduledForDeletion !== null) {
+                if (!$this->dataLeaguesScheduledForDeletion->isEmpty()) {
+                    DataLeagueQuery::create()
+                        ->filterByPrimaryKeys($this->dataLeaguesScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->leaguessScheduledForDeletion = null;
+                    $this->dataLeaguesScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collLeaguess !== null) {
-                foreach ($this->collLeaguess as $referrerFK) {
+            if ($this->collDataLeagues !== null) {
+                foreach ($this->collDataLeagues as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -483,27 +508,27 @@ abstract class BaseUsers extends BaseObject implements Persistent
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[] = UsersPeer::ID;
+        $this->modifiedColumns[] = LeaguesPeer::ID;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UsersPeer::ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . LeaguesPeer::ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UsersPeer::ID)) {
+        if ($this->isColumnModified(LeaguesPeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`id`';
         }
-        if ($this->isColumnModified(UsersPeer::LOGIN)) {
-            $modifiedColumns[':p' . $index++]  = '`login`';
+        if ($this->isColumnModified(LeaguesPeer::NAME)) {
+            $modifiedColumns[':p' . $index++]  = '`name`';
         }
-        if ($this->isColumnModified(UsersPeer::PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = '`password`';
+        if ($this->isColumnModified(LeaguesPeer::DATA)) {
+            $modifiedColumns[':p' . $index++]  = '`data`';
         }
-        if ($this->isColumnModified(UsersPeer::ROLE)) {
-            $modifiedColumns[':p' . $index++]  = '`role`';
+        if ($this->isColumnModified(LeaguesPeer::USER_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`user_id`';
         }
 
         $sql = sprintf(
-            'INSERT INTO `users` (%s) VALUES (%s)',
+            'INSERT INTO `leagues` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -515,14 +540,14 @@ abstract class BaseUsers extends BaseObject implements Persistent
                     case '`id`':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case '`login`':
-                        $stmt->bindValue($identifier, $this->login, PDO::PARAM_STR);
+                    case '`name`':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case '`password`':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+                    case '`data`':
+                        $stmt->bindValue($identifier, $this->data, PDO::PARAM_STR);
                         break;
-                    case '`role`':
-                        $stmt->bindValue($identifier, $this->role, PDO::PARAM_STR);
+                    case '`user_id`':
+                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -618,13 +643,25 @@ abstract class BaseUsers extends BaseObject implements Persistent
             $failureMap = array();
 
 
-            if (($retval = UsersPeer::doValidate($this, $columns)) !== true) {
+            // We call the validate method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aUsers !== null) {
+                if (!$this->aUsers->validate($columns)) {
+                    $failureMap = array_merge($failureMap, $this->aUsers->getValidationFailures());
+                }
+            }
+
+
+            if (($retval = LeaguesPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
             }
 
 
-                if ($this->collLeaguess !== null) {
-                    foreach ($this->collLeaguess as $referrerFK) {
+                if ($this->collDataLeagues !== null) {
+                    foreach ($this->collDataLeagues as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -650,7 +687,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = UsersPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = LeaguesPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -670,13 +707,13 @@ abstract class BaseUsers extends BaseObject implements Persistent
                 return $this->getId();
                 break;
             case 1:
-                return $this->getLogin();
+                return $this->getName();
                 break;
             case 2:
-                return $this->getPassword();
+                return $this->getData();
                 break;
             case 3:
-                return $this->getRole();
+                return $this->getUserId();
                 break;
             default:
                 return null;
@@ -701,16 +738,16 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
-        if (isset($alreadyDumpedObjects['Users'][$this->getPrimaryKey()])) {
+        if (isset($alreadyDumpedObjects['Leagues'][$this->getPrimaryKey()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Users'][$this->getPrimaryKey()] = true;
-        $keys = UsersPeer::getFieldNames($keyType);
+        $alreadyDumpedObjects['Leagues'][$this->getPrimaryKey()] = true;
+        $keys = LeaguesPeer::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getLogin(),
-            $keys[2] => $this->getPassword(),
-            $keys[3] => $this->getRole(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getData(),
+            $keys[3] => $this->getUserId(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -718,8 +755,11 @@ abstract class BaseUsers extends BaseObject implements Persistent
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collLeaguess) {
-                $result['Leaguess'] = $this->collLeaguess->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            if (null !== $this->aUsers) {
+                $result['Users'] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collDataLeagues) {
+                $result['DataLeagues'] = $this->collDataLeagues->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -739,7 +779,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = UsersPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = LeaguesPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 
         $this->setByPosition($pos, $value);
     }
@@ -759,13 +799,13 @@ abstract class BaseUsers extends BaseObject implements Persistent
                 $this->setId($value);
                 break;
             case 1:
-                $this->setLogin($value);
+                $this->setName($value);
                 break;
             case 2:
-                $this->setPassword($value);
+                $this->setData($value);
                 break;
             case 3:
-                $this->setRole($value);
+                $this->setUserId($value);
                 break;
         } // switch()
     }
@@ -789,12 +829,12 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
     {
-        $keys = UsersPeer::getFieldNames($keyType);
+        $keys = LeaguesPeer::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-        if (array_key_exists($keys[1], $arr)) $this->setLogin($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setPassword($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setRole($arr[$keys[3]]);
+        if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
+        if (array_key_exists($keys[2], $arr)) $this->setData($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setUserId($arr[$keys[3]]);
     }
 
     /**
@@ -804,12 +844,12 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(UsersPeer::DATABASE_NAME);
+        $criteria = new Criteria(LeaguesPeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(UsersPeer::ID)) $criteria->add(UsersPeer::ID, $this->id);
-        if ($this->isColumnModified(UsersPeer::LOGIN)) $criteria->add(UsersPeer::LOGIN, $this->login);
-        if ($this->isColumnModified(UsersPeer::PASSWORD)) $criteria->add(UsersPeer::PASSWORD, $this->password);
-        if ($this->isColumnModified(UsersPeer::ROLE)) $criteria->add(UsersPeer::ROLE, $this->role);
+        if ($this->isColumnModified(LeaguesPeer::ID)) $criteria->add(LeaguesPeer::ID, $this->id);
+        if ($this->isColumnModified(LeaguesPeer::NAME)) $criteria->add(LeaguesPeer::NAME, $this->name);
+        if ($this->isColumnModified(LeaguesPeer::DATA)) $criteria->add(LeaguesPeer::DATA, $this->data);
+        if ($this->isColumnModified(LeaguesPeer::USER_ID)) $criteria->add(LeaguesPeer::USER_ID, $this->user_id);
 
         return $criteria;
     }
@@ -824,8 +864,8 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function buildPkeyCriteria()
     {
-        $criteria = new Criteria(UsersPeer::DATABASE_NAME);
-        $criteria->add(UsersPeer::ID, $this->id);
+        $criteria = new Criteria(LeaguesPeer::DATABASE_NAME);
+        $criteria->add(LeaguesPeer::ID, $this->id);
 
         return $criteria;
     }
@@ -866,16 +906,16 @@ abstract class BaseUsers extends BaseObject implements Persistent
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param object $copyObj An object of Users (or compatible) type.
+     * @param object $copyObj An object of Leagues (or compatible) type.
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setLogin($this->getLogin());
-        $copyObj->setPassword($this->getPassword());
-        $copyObj->setRole($this->getRole());
+        $copyObj->setName($this->getName());
+        $copyObj->setData($this->getData());
+        $copyObj->setUserId($this->getUserId());
 
         if ($deepCopy && !$this->startCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -884,9 +924,9 @@ abstract class BaseUsers extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
-            foreach ($this->getLeaguess() as $relObj) {
+            foreach ($this->getDataLeagues() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addLeagues($relObj->copy($deepCopy));
+                    $copyObj->addDataLeague($relObj->copy($deepCopy));
                 }
             }
 
@@ -909,7 +949,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
      * objects.
      *
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return Users Clone of current object.
+     * @return Leagues Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -929,15 +969,67 @@ abstract class BaseUsers extends BaseObject implements Persistent
      * same instance for all member of this class. The method could therefore
      * be static, but this would prevent one from overriding the behavior.
      *
-     * @return UsersPeer
+     * @return LeaguesPeer
      */
     public function getPeer()
     {
         if (self::$peer === null) {
-            self::$peer = new UsersPeer();
+            self::$peer = new LeaguesPeer();
         }
 
         return self::$peer;
+    }
+
+    /**
+     * Declares an association between this object and a Users object.
+     *
+     * @param                  Users $v
+     * @return Leagues The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUsers(Users $v = null)
+    {
+        if ($v === null) {
+            $this->setUserId(NULL);
+        } else {
+            $this->setUserId($v->getId());
+        }
+
+        $this->aUsers = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the Users object, it will not be re-added.
+        if ($v !== null) {
+            $v->addLeagues($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated Users object
+     *
+     * @param PropelPDO $con Optional Connection object.
+     * @param $doQuery Executes a query to get the object if required
+     * @return Users The associated Users object.
+     * @throws PropelException
+     */
+    public function getUsers(PropelPDO $con = null, $doQuery = true)
+    {
+        if ($this->aUsers === null && ($this->user_id !== null) && $doQuery) {
+            $this->aUsers = UsersQuery::create()->findPk($this->user_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsers->addLeaguess($this);
+             */
+        }
+
+        return $this->aUsers;
     }
 
 
@@ -951,42 +1043,42 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
-        if ('Leagues' == $relationName) {
-            $this->initLeaguess();
+        if ('DataLeague' == $relationName) {
+            $this->initDataLeagues();
         }
     }
 
     /**
-     * Clears out the collLeaguess collection
+     * Clears out the collDataLeagues collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
-     * @return Users The current object (for fluent API support)
-     * @see        addLeaguess()
+     * @return Leagues The current object (for fluent API support)
+     * @see        addDataLeagues()
      */
-    public function clearLeaguess()
+    public function clearDataLeagues()
     {
-        $this->collLeaguess = null; // important to set this to null since that means it is uninitialized
-        $this->collLeaguessPartial = null;
+        $this->collDataLeagues = null; // important to set this to null since that means it is uninitialized
+        $this->collDataLeaguesPartial = null;
 
         return $this;
     }
 
     /**
-     * reset is the collLeaguess collection loaded partially
+     * reset is the collDataLeagues collection loaded partially
      *
      * @return void
      */
-    public function resetPartialLeaguess($v = true)
+    public function resetPartialDataLeagues($v = true)
     {
-        $this->collLeaguessPartial = $v;
+        $this->collDataLeaguesPartial = $v;
     }
 
     /**
-     * Initializes the collLeaguess collection.
+     * Initializes the collDataLeagues collection.
      *
-     * By default this just sets the collLeaguess collection to an empty array (like clearcollLeaguess());
+     * By default this just sets the collDataLeagues collection to an empty array (like clearcollDataLeagues());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -995,158 +1087,158 @@ abstract class BaseUsers extends BaseObject implements Persistent
      *
      * @return void
      */
-    public function initLeaguess($overrideExisting = true)
+    public function initDataLeagues($overrideExisting = true)
     {
-        if (null !== $this->collLeaguess && !$overrideExisting) {
+        if (null !== $this->collDataLeagues && !$overrideExisting) {
             return;
         }
-        $this->collLeaguess = new PropelObjectCollection();
-        $this->collLeaguess->setModel('Leagues');
+        $this->collDataLeagues = new PropelObjectCollection();
+        $this->collDataLeagues->setModel('DataLeague');
     }
 
     /**
-     * Gets an array of Leagues objects which contain a foreign key that references this object.
+     * Gets an array of DataLeague objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Users is new, it will return
+     * If this Leagues is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Leagues[] List of Leagues objects
+     * @return PropelObjectCollection|DataLeague[] List of DataLeague objects
      * @throws PropelException
      */
-    public function getLeaguess($criteria = null, PropelPDO $con = null)
+    public function getDataLeagues($criteria = null, PropelPDO $con = null)
     {
-        $partial = $this->collLeaguessPartial && !$this->isNew();
-        if (null === $this->collLeaguess || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collLeaguess) {
+        $partial = $this->collDataLeaguesPartial && !$this->isNew();
+        if (null === $this->collDataLeagues || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collDataLeagues) {
                 // return empty collection
-                $this->initLeaguess();
+                $this->initDataLeagues();
             } else {
-                $collLeaguess = LeaguesQuery::create(null, $criteria)
-                    ->filterByUsers($this)
+                $collDataLeagues = DataLeagueQuery::create(null, $criteria)
+                    ->filterByLeagues($this)
                     ->find($con);
                 if (null !== $criteria) {
-                    if (false !== $this->collLeaguessPartial && count($collLeaguess)) {
-                      $this->initLeaguess(false);
+                    if (false !== $this->collDataLeaguesPartial && count($collDataLeagues)) {
+                      $this->initDataLeagues(false);
 
-                      foreach ($collLeaguess as $obj) {
-                        if (false == $this->collLeaguess->contains($obj)) {
-                          $this->collLeaguess->append($obj);
+                      foreach ($collDataLeagues as $obj) {
+                        if (false == $this->collDataLeagues->contains($obj)) {
+                          $this->collDataLeagues->append($obj);
                         }
                       }
 
-                      $this->collLeaguessPartial = true;
+                      $this->collDataLeaguesPartial = true;
                     }
 
-                    $collLeaguess->getInternalIterator()->rewind();
+                    $collDataLeagues->getInternalIterator()->rewind();
 
-                    return $collLeaguess;
+                    return $collDataLeagues;
                 }
 
-                if ($partial && $this->collLeaguess) {
-                    foreach ($this->collLeaguess as $obj) {
+                if ($partial && $this->collDataLeagues) {
+                    foreach ($this->collDataLeagues as $obj) {
                         if ($obj->isNew()) {
-                            $collLeaguess[] = $obj;
+                            $collDataLeagues[] = $obj;
                         }
                     }
                 }
 
-                $this->collLeaguess = $collLeaguess;
-                $this->collLeaguessPartial = false;
+                $this->collDataLeagues = $collDataLeagues;
+                $this->collDataLeaguesPartial = false;
             }
         }
 
-        return $this->collLeaguess;
+        return $this->collDataLeagues;
     }
 
     /**
-     * Sets a collection of Leagues objects related by a one-to-many relationship
+     * Sets a collection of DataLeague objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param PropelCollection $leaguess A Propel collection.
+     * @param PropelCollection $dataLeagues A Propel collection.
      * @param PropelPDO $con Optional connection object
-     * @return Users The current object (for fluent API support)
+     * @return Leagues The current object (for fluent API support)
      */
-    public function setLeaguess(PropelCollection $leaguess, PropelPDO $con = null)
+    public function setDataLeagues(PropelCollection $dataLeagues, PropelPDO $con = null)
     {
-        $leaguessToDelete = $this->getLeaguess(new Criteria(), $con)->diff($leaguess);
+        $dataLeaguesToDelete = $this->getDataLeagues(new Criteria(), $con)->diff($dataLeagues);
 
 
-        $this->leaguessScheduledForDeletion = $leaguessToDelete;
+        $this->dataLeaguesScheduledForDeletion = $dataLeaguesToDelete;
 
-        foreach ($leaguessToDelete as $leaguesRemoved) {
-            $leaguesRemoved->setUsers(null);
+        foreach ($dataLeaguesToDelete as $dataLeagueRemoved) {
+            $dataLeagueRemoved->setLeagues(null);
         }
 
-        $this->collLeaguess = null;
-        foreach ($leaguess as $leagues) {
-            $this->addLeagues($leagues);
+        $this->collDataLeagues = null;
+        foreach ($dataLeagues as $dataLeague) {
+            $this->addDataLeague($dataLeague);
         }
 
-        $this->collLeaguess = $leaguess;
-        $this->collLeaguessPartial = false;
+        $this->collDataLeagues = $dataLeagues;
+        $this->collDataLeaguesPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related Leagues objects.
+     * Returns the number of related DataLeague objects.
      *
      * @param Criteria $criteria
      * @param boolean $distinct
      * @param PropelPDO $con
-     * @return int             Count of related Leagues objects.
+     * @return int             Count of related DataLeague objects.
      * @throws PropelException
      */
-    public function countLeaguess(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    public function countDataLeagues(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
     {
-        $partial = $this->collLeaguessPartial && !$this->isNew();
-        if (null === $this->collLeaguess || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collLeaguess) {
+        $partial = $this->collDataLeaguesPartial && !$this->isNew();
+        if (null === $this->collDataLeagues || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collDataLeagues) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getLeaguess());
+                return count($this->getDataLeagues());
             }
-            $query = LeaguesQuery::create(null, $criteria);
+            $query = DataLeagueQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
 
             return $query
-                ->filterByUsers($this)
+                ->filterByLeagues($this)
                 ->count($con);
         }
 
-        return count($this->collLeaguess);
+        return count($this->collDataLeagues);
     }
 
     /**
-     * Method called to associate a Leagues object to this object
-     * through the Leagues foreign key attribute.
+     * Method called to associate a DataLeague object to this object
+     * through the DataLeague foreign key attribute.
      *
-     * @param    Leagues $l Leagues
-     * @return Users The current object (for fluent API support)
+     * @param    DataLeague $l DataLeague
+     * @return Leagues The current object (for fluent API support)
      */
-    public function addLeagues(Leagues $l)
+    public function addDataLeague(DataLeague $l)
     {
-        if ($this->collLeaguess === null) {
-            $this->initLeaguess();
-            $this->collLeaguessPartial = true;
+        if ($this->collDataLeagues === null) {
+            $this->initDataLeagues();
+            $this->collDataLeaguesPartial = true;
         }
 
-        if (!in_array($l, $this->collLeaguess->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddLeagues($l);
+        if (!in_array($l, $this->collDataLeagues->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddDataLeague($l);
 
-            if ($this->leaguessScheduledForDeletion and $this->leaguessScheduledForDeletion->contains($l)) {
-                $this->leaguessScheduledForDeletion->remove($this->leaguessScheduledForDeletion->search($l));
+            if ($this->dataLeaguesScheduledForDeletion and $this->dataLeaguesScheduledForDeletion->contains($l)) {
+                $this->dataLeaguesScheduledForDeletion->remove($this->dataLeaguesScheduledForDeletion->search($l));
             }
         }
 
@@ -1154,31 +1246,56 @@ abstract class BaseUsers extends BaseObject implements Persistent
     }
 
     /**
-     * @param	Leagues $leagues The leagues object to add.
+     * @param	DataLeague $dataLeague The dataLeague object to add.
      */
-    protected function doAddLeagues($leagues)
+    protected function doAddDataLeague($dataLeague)
     {
-        $this->collLeaguess[]= $leagues;
-        $leagues->setUsers($this);
+        $this->collDataLeagues[]= $dataLeague;
+        $dataLeague->setLeagues($this);
     }
 
     /**
-     * @param	Leagues $leagues The leagues object to remove.
-     * @return Users The current object (for fluent API support)
+     * @param	DataLeague $dataLeague The dataLeague object to remove.
+     * @return Leagues The current object (for fluent API support)
      */
-    public function removeLeagues($leagues)
+    public function removeDataLeague($dataLeague)
     {
-        if ($this->getLeaguess()->contains($leagues)) {
-            $this->collLeaguess->remove($this->collLeaguess->search($leagues));
-            if (null === $this->leaguessScheduledForDeletion) {
-                $this->leaguessScheduledForDeletion = clone $this->collLeaguess;
-                $this->leaguessScheduledForDeletion->clear();
+        if ($this->getDataLeagues()->contains($dataLeague)) {
+            $this->collDataLeagues->remove($this->collDataLeagues->search($dataLeague));
+            if (null === $this->dataLeaguesScheduledForDeletion) {
+                $this->dataLeaguesScheduledForDeletion = clone $this->collDataLeagues;
+                $this->dataLeaguesScheduledForDeletion->clear();
             }
-            $this->leaguessScheduledForDeletion[]= clone $leagues;
-            $leagues->setUsers(null);
+            $this->dataLeaguesScheduledForDeletion[]= clone $dataLeague;
+            $dataLeague->setLeagues(null);
         }
 
         return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Leagues is new, it will return
+     * an empty collection; or if this Leagues has previously
+     * been saved, it will retrieve related DataLeagues from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Leagues.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|DataLeague[] List of DataLeague objects
+     */
+    public function getDataLeaguesJoinMatches($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = DataLeagueQuery::create(null, $criteria);
+        $query->joinWith('Matches', $join_behavior);
+
+        return $this->getDataLeagues($query, $con);
     }
 
     /**
@@ -1187,9 +1304,9 @@ abstract class BaseUsers extends BaseObject implements Persistent
     public function clear()
     {
         $this->id = null;
-        $this->login = null;
-        $this->password = null;
-        $this->role = null;
+        $this->name = null;
+        $this->data = null;
+        $this->user_id = null;
         $this->alreadyInSave = false;
         $this->alreadyInValidation = false;
         $this->alreadyInClearAllReferencesDeep = false;
@@ -1212,19 +1329,23 @@ abstract class BaseUsers extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->collLeaguess) {
-                foreach ($this->collLeaguess as $o) {
+            if ($this->collDataLeagues) {
+                foreach ($this->collDataLeagues as $o) {
                     $o->clearAllReferences($deep);
                 }
+            }
+            if ($this->aUsers instanceof Persistent) {
+              $this->aUsers->clearAllReferences($deep);
             }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        if ($this->collLeaguess instanceof PropelCollection) {
-            $this->collLeaguess->clearIterator();
+        if ($this->collDataLeagues instanceof PropelCollection) {
+            $this->collDataLeagues->clearIterator();
         }
-        $this->collLeaguess = null;
+        $this->collDataLeagues = null;
+        $this->aUsers = null;
     }
 
     /**
@@ -1234,7 +1355,7 @@ abstract class BaseUsers extends BaseObject implements Persistent
      */
     public function __toString()
     {
-        return (string) $this->exportTo(UsersPeer::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(LeaguesPeer::DEFAULT_STRING_FORMAT);
     }
 
     /**
